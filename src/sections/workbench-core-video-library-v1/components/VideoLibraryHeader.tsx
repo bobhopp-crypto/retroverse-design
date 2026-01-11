@@ -17,6 +17,7 @@ interface VideoLibraryHeaderProps {
   onSortChange: (sort: SortOption) => void
   playlistCount?: number
   playlistDuration?: number // seconds
+  onPlaylistClick?: () => void
   filteredTracks: VideoFile[]
   allTracks: VideoFile[] // Full database for Catalog mode
   onAddToPlaylist?: (tracks: VideoFile[]) => void
@@ -46,6 +47,7 @@ export function VideoLibraryHeader({
   onSortChange,
   playlistCount,
   playlistDuration,
+  onPlaylistClick,
   filteredTracks,
   allTracks,
   onAddToPlaylist,
@@ -200,7 +202,10 @@ export function VideoLibraryHeader({
           </button>
 
           {/* Playlist Display (right) */}
-          <button className="px-3 py-1.5 rounded-full text-sm font-mono bg-[#2E2620] text-[#C7BBA7] border border-[#3C3129] hover:bg-[#3C3129] whitespace-nowrap transition-colors">
+          <button 
+            onClick={() => onPlaylistClick?.()}
+            className="px-3 py-1.5 rounded-full text-sm font-mono bg-[#2E2620] text-[#C7BBA7] border border-[#3C3129] hover:bg-[#3C3129] whitespace-nowrap transition-colors cursor-pointer"
+          >
             {formatPlaylist()}
           </button>
         </div>

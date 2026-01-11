@@ -6,6 +6,7 @@ interface PlaylistShellProps {
   playlistTracks: VideoFile[]
   onVideoClick?: (video: VideoFile) => void
   onRemove?: (video: VideoFile) => void
+  onReorder?: (fromIndex: number, toIndex: number) => void
 }
 
 /**
@@ -16,7 +17,7 @@ interface PlaylistShellProps {
  * - Compact playlist cards (PlaylistCard component)
  * - Play and Remove controls
  */
-export function PlaylistShell({ playlistTracks, onVideoClick, onRemove }: PlaylistShellProps) {
+export function PlaylistShell({ playlistTracks, onVideoClick, onRemove, onReorder }: PlaylistShellProps) {
   // Calculate total duration (normalize to seconds)
   const totalDurationSeconds = playlistTracks.reduce((sum, track) => {
     return sum + parseDuration(track.Length || '0:0')
@@ -41,8 +42,10 @@ export function PlaylistShell({ playlistTracks, onVideoClick, onRemove }: Playli
             <PlaylistCard
               key={`${video.FilePath}-${index}`}
               video={video}
+              index={index}
               onPlay={() => onVideoClick?.(video)}
               onRemove={() => onRemove?.(video)}
+              onReorder={onReorder}
             />
           ))}
         </div>

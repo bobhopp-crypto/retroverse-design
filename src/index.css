@@ -1,4 +1,32 @@
 @import "tailwindcss";
+
+/* Hide scrollbars on mobile */
+@layer utilities {
+  @media (max-width: 639px) {
+    /* Hide scrollbars on elements with hide-scrollbar class */
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      background: transparent !important;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none !important;
+      scrollbar-width: none !important;
+    }
+    
+    /* Hide all scrollbars on mobile */
+    *::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+    * {
+      -ms-overflow-style: none !important;
+      scrollbar-width: none !important;
+    }
+  }
+}
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -198,12 +226,51 @@
     }
   }
 
-  @keyframes collapse-up {
-    from {
-      height: var(--radix-collapsible-content-height);
+      @keyframes collapse-up {
+        from {
+          height: var(--radix-collapsible-content-height);
+        }
+        to {
+          height: 0;
+        }
+      }
+
+      /* Video card metadata row - grid layout (Video List) */
+      .meta-row {
+        display: grid;
+        grid-template-columns: 4ch 5ch 12ch 3ch;
+        column-gap: 0.6ch;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.82rem;
+        line-height: 1.2;
+        white-space: nowrap;
+      }
+
+      /* Playlist card metadata row - grid layout (Year and Duration only) */
+      .meta-row-playlist {
+        display: grid;
+        grid-template-columns: 4ch 5ch;
+        column-gap: 0.6ch;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.82rem;
+        line-height: 1.2;
+        white-space: nowrap;
+      }
+
+      .meta-year {
+        text-align: left;
+      }
+
+      .meta-time {
+        text-align: left;
+      }
+
+      .meta-genre {
+        text-align: right;
+        overflow: hidden;
+      }
+
+      .meta-plays {
+        text-align: right;
+      }
     }
-    to {
-      height: 0;
-    }
-  }
-}

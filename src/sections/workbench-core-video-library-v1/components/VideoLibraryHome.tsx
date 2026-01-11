@@ -219,12 +219,49 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
   // Playlist panel state (overlay mode)
   const [isPlaylistPanelOpen, setIsPlaylistPanelOpen] = useState(false)
 
+  // Handle Playlist Click (opens playlist panel)
+  const handlePlaylistClick = () => {
+    setIsPlaylistPanelOpen(true)
+  }
+
   // Calculate playlist duration (in seconds)
   const playlistDuration = useMemo(() => {
     return playlistTracks.reduce((sum, track) => {
       return sum + parseDuration(track.Length || '0:0')
     }, 0)
   }, [playlistTracks])
+
+  // Handle Export Playlist
+  const handleExportPlaylist = () => {
+    const content = playlistTracks
+      .map((track) => `${track.Artist} - ${track.Title}`)
+      .join('\n')
+    
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'retroverse-playlist.txt'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
+
+  // Handle Playlist Reorder
+  const handlePlaylistReorder = (fromIndex: number, toIndex: number) => {
+    setPlaylistTracks((prev) => {
+      const newTracks = [...prev]
+      const [movedItem] = newTracks.splice(fromIndex, 1)
+      newTracks.splice(toIndex, 0, movedItem)
+      return newTracks
+    })
+  }
+
+  // Handle Clear Playlist
+  const handleClearPlaylist = () => {
+    setPlaylistTracks([])
+  }
 
   // Handle Add to Playlist
   const handleAddToPlaylist = (tracks: VideoFile[]) => {
@@ -286,6 +323,7 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
         onSortChange={handleSortChange}
         playlistCount={playlistTracks.length}
         playlistDuration={playlistDuration}
+        onPlaylistClick={handlePlaylistClick}
         filteredTracks={filteredAndSortedVideos}
         allTracks={videos}
         onAddToPlaylist={handleAddToPlaylist}
@@ -298,11 +336,7 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-0 sm:pt-4 pb-4">
         <VideoList
           videos={filteredAndSortedVideos}
-          onVideoClick={handleVideoClick}
-          onPlay={handlePlay}
-          onAdd={handleAddVideoToPlaylist}
-          onInfo={handleInfo}
-          isInPlaylist={isVideoInPlaylist}
+          onVideoClick={handleInfo}
         />
       </div>
 
@@ -315,6 +349,9 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
         onRemove={(video) => {
           setPlaylistTracks((prev) => prev.filter((v) => v.FilePath !== video.FilePath))
         }}
+        onExport={handleExportPlaylist}
+        onClear={handleClearPlaylist}
+        onReorder={handlePlaylistReorder}
       />
 
       {/* Footer placeholder for future timeline / nostalgia navigation (inactive in v1) */}
@@ -329,6 +366,9 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
         video={selectedVideo}
         open={isDetailOpen}
         onClose={handleCloseDetail}
+        onPlay={handlePlay}
+        onAddToPlaylist={handleAddVideoToPlaylist}
+        isInPlaylist={isVideoInPlaylist}
       />
     </div>
   )
