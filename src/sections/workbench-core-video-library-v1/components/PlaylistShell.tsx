@@ -1,0 +1,56 @@
+import type { VideoFile } from '../types'
+import { PlaylistCard } from './PlaylistCard'
+import { parseDuration } from '../utils/duration'
+
+interface PlaylistShellProps {
+  playlistTracks: VideoFile[]
+  onVideoClick?: (video: VideoFile) => void
+  onRemove?: (video: VideoFile) => void
+}
+
+/**
+ * Playlist Shell — Minimal stub for testing Random Panel
+ * 
+ * Displays:
+ * - Count + total duration at top
+ * - Compact playlist cards (PlaylistCard component)
+ * - Play and Remove controls
+ */
+export function PlaylistShell({ playlistTracks, onVideoClick, onRemove }: PlaylistShellProps) {
+  // Calculate total duration (normalize to seconds)
+  const totalDurationSeconds = playlistTracks.reduce((sum, track) => {
+    return sum + parseDuration(track.Length || '0:0')
+  }, 0)
+
+  const hours = Math.floor(totalDurationSeconds / 3600)
+  const minutes = Math.floor((totalDurationSeconds % 3600) / 60)
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
+      {/* Count + Duration Header */}
+      <div className="mb-4 text-center">
+        <div className="text-lg font-mono text-[#C7BBA7]">
+          {playlistTracks.length.toString().padStart(3, '0')} tracks • {hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}
+        </div>
+      </div>
+
+      {/* Playlist List */}
+      {playlistTracks.length > 0 ? (
+        <div className="space-y-0">
+          {playlistTracks.map((video, index) => (
+            <PlaylistCard
+              key={`${video.FilePath}-${index}`}
+              video={video}
+              onPlay={() => onVideoClick?.(video)}
+              onRemove={() => onRemove?.(video)}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-12 text-[#C7BBA7]">
+          Playlist is empty
+        </div>
+      )}
+    </div>
+  )
+}
