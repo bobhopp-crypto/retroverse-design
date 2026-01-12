@@ -10,6 +10,7 @@ interface PlaylistPanelProps {
   onClose: () => void
   playlistTracks: VideoFile[]
   onVideoClick?: (video: VideoFile) => void
+  onPlay?: (video: VideoFile) => void
   onRemove?: (video: VideoFile) => void
   onExport?: () => void
   onClear?: () => void
@@ -31,6 +32,7 @@ export function PlaylistPanel({
   onClose,
   playlistTracks,
   onVideoClick,
+  onPlay,
   onRemove,
   onExport,
   onClear,
@@ -91,6 +93,7 @@ export function PlaylistPanel({
           <PlaylistShell
             playlistTracks={playlistTracks}
             onVideoClick={onVideoClick}
+            onPlay={onPlay}
             onRemove={onRemove}
             onReorder={onReorder}
           />

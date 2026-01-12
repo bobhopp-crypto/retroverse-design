@@ -129,6 +129,7 @@ export function PlaylistCard({ video, index, onPlay, onRemove, onReorder }: Play
           {/* Line 3: Metadata bar (Year, Duration only) - grid layout */}
           <div className="meta-row-playlist text-[#C7BBA7]">
             <span className="meta-year">{video.Year || 'Unknown'}</span>
+            <span className="text-center">•</span>
             <span className="meta-time">{formatTime(video.Length)}</span>
           </div>
         </div>

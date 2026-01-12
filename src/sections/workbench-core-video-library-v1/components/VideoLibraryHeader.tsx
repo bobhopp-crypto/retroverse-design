@@ -123,13 +123,13 @@ export function VideoLibraryHeader({
 
         {/* Search input container (centered) */}
         <div className="flex-1 flex justify-center px-2 sm:px-4">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Search videos…"
-            className="w-full max-w-[120px] sm:max-w-[240px] px-3 sm:px-4 py-2 bg-[#1A1510] border border-[#3C3129] rounded text-[#F5ECD7] placeholder-[#C7BBA7] focus:outline-none focus:border-[#E8D29A] focus:ring-2 focus:ring-[#E8D29A]/20"
-          />
+           <input
+             type="text"
+             value={searchQuery}
+             onChange={(e) => onSearchChange(e.target.value)}
+             placeholder="Look up . . . "
+             className="w-full max-w-[120px] sm:max-w-[240px] px-3 sm:px-4 py-2 bg-[#1A1510] border border-[#3C3129] rounded text-[#F5ECD7] placeholder-[#C7BBA7] focus:outline-none focus:border-[#E8D29A] focus:ring-2 focus:ring-[#E8D29A]/20"
+           />
         </div>
 
         {/* Visible count text */}

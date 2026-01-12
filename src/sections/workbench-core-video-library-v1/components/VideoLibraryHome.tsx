@@ -17,6 +17,7 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
   const [sortBy, setSortBy] = useState<SortOption>('title')
   const [selectedVideo, setSelectedVideo] = useState<VideoFile | null>(null)
   const [isDetailOpen, setIsDetailOpen] = useState(false)
+  const [activeVideo, setActiveVideo] = useState<VideoFile | null>(null)
   
   // Playlist state (in-memory, append-only)
   const [playlistTracks, setPlaylistTracks] = useState<VideoFile[]>([])
@@ -185,10 +186,9 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
     setSelectedVideo(null)
   }
 
-  // Handle Play (placeholder - will be implemented later)
+  // Handle Play - opens video player
   const handlePlay = (video: VideoFile) => {
-    // TODO: Implement play functionality
-    console.log('Play:', video.Title)
+    setActiveVideo(video)
   }
 
   // Handle Add to Playlist (toggle)
@@ -346,6 +346,7 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
         onClose={() => setIsPlaylistPanelOpen(false)}
         playlistTracks={playlistTracks}
         onVideoClick={handleVideoClick}
+        onPlay={handlePlay}
         onRemove={(video) => {
           setPlaylistTracks((prev) => prev.filter((v) => v.FilePath !== video.FilePath))
         }}
@@ -370,6 +371,55 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
         onAddToPlaylist={handleAddVideoToPlaylist}
         isInPlaylist={isVideoInPlaylist}
       />
+
+      {/* Video Player Modal */}
+      {activeVideo && (() => {
+        const PUBLIC_R2_BASE_URL = "https://pub-5c80acab1a7448259a26f1161a3fe649.r2.dev/";
+        // Use exact stored R2 object path - no encoding, no transformation
+        // The FilePath field must contain the exact R2 object key as stored
+        const videoUrl = PUBLIC_R2_BASE_URL + activeVideo.FilePath;
+        console.log('Video URL:', videoUrl);
+        
+        return (
+          <div
+            style={{
+              position: 'fixed',
+              inset: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 99999
+            }}
+            onClick={() => setActiveVideo(null)}
+          >
+            <div
+              style={{
+                width: 'min(90vw, 960px)',
+                height: 'min(80vh, 540px)',
+                minHeight: '240px',
+                backgroundColor: '#000',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                position: 'relative'
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <video
+                src={videoUrl}
+                controls
+                autoPlay
+                playsInline
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  display: 'block'
+                }}
+              />
+            </div>
+          </div>
+        );
+      })()}
     </div>
   )
 }

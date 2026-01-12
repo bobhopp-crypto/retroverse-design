@@ -26,7 +26,7 @@ export function FilterBar({
         type="text"
         value={searchQuery}
         onChange={(e) => onSearchChange(e.target.value)}
-        placeholder="Search videos..."
+        placeholder="Look up . . . "
         className="w-full px-3 sm:px-4 py-2 bg-[#1A1510] border border-[#3C3129] rounded text-[#F5ECD7] placeholder-[#C7BBA7] focus:outline-none focus:border-[#E8D29A] focus:ring-2 focus:ring-[#E8D29A]/20 text-sm sm:text-base"
       />
 

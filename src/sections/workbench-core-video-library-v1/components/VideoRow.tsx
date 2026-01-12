@@ -46,6 +46,7 @@ export function VideoRow({ video, onClick }: VideoRowProps) {
           {/* Line 3: Metadata bar - grid layout */}
           <div className="meta-row text-[#C7BBA7]">
             <span className="meta-year">{video.Year || 'Unknown'}</span>
+            <span className="text-center">•</span>
             <span className="meta-time">{formatTime(video.Length)}</span>
             <span className="meta-genre">{video.Genre || ''}</span>
             <span className="meta-plays">{video.PlayCount}</span>
