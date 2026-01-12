@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import type { VideoFile } from '../types'
 import { VideoLibraryHeader } from './VideoLibraryHeader'
 import { VideoList } from './VideoList'
@@ -189,6 +189,25 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
   // Handle Play - opens video player
   const handlePlay = (video: VideoFile) => {
     setActiveVideo(video)
+  }
+
+  // Handle ESC key to close video player
+  useEffect(() => {
+    if (!activeVideo) return
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActiveVideo(null)
+      }
+    }
+
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [activeVideo])
+
+  // Handle close video player
+  const handleCloseVideo = () => {
+    setActiveVideo(null)
   }
 
   // Handle Add to Playlist (toggle)
@@ -391,7 +410,7 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
               justifyContent: 'center',
               zIndex: 99999
             }}
-            onClick={() => setActiveVideo(null)}
+            onClick={handleCloseVideo}
           >
             <div
               style={{
@@ -405,6 +424,34 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
               }}
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Close Button */}
+              <button
+                onClick={handleCloseVideo}
+                aria-label="Close video"
+                style={{
+                  position: 'absolute',
+                  top: '12px',
+                  right: '12px',
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  color: '#fff',
+                  fontSize: '20px',
+                  lineHeight: '1',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 100000,
+                  transition: 'background-color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.8)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.6)'}
+              >
+                ×
+              </button>
               <video
                 src={videoUrl}
                 controls
