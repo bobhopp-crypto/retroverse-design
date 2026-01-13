@@ -24,6 +24,8 @@ interface VideoLibraryHeaderProps {
   onPreview?: (tracks: VideoFile[]) => void
   onClearFilters?: () => void // For Catalog mode
   onRandomPanelOpenChange?: (isOpen: boolean) => void // Clear preview on reopen
+  recentlyAddedFilter?: 'all' | 30 | 90 | 180 | 365
+  onRecentlyAddedFilterClick?: () => void
 }
 
 /**
@@ -54,6 +56,8 @@ export function VideoLibraryHeader({
   onPreview,
   onClearFilters,
   onRandomPanelOpenChange,
+  recentlyAddedFilter = 'all',
+  onRecentlyAddedFilterClick,
 }: VideoLibraryHeaderProps) {
   // Check if slider is at Catalog mode (fully left = minYear)
   const isCatalogMode = centerYear === minYear
@@ -172,6 +176,24 @@ export function VideoLibraryHeader({
           >
             {getSortLabel()}
           </button>
+
+          {/* Recently Added Toggle — v1 (LOCKED: 5-state, no config) */}
+          {onRecentlyAddedFilterClick && (
+            <button
+              onClick={onRecentlyAddedFilterClick}
+              className={`px-3 py-1.5 rounded-full text-sm transition-colors border ${
+                recentlyAddedFilter !== 'all'
+                  ? 'bg-[#A6765B] text-[#F5ECD7] border-[#A6765B]'
+                  : 'bg-[#2E2620] text-[#C7BBA7] hover:bg-[#3C3129] border-[#3C3129]'
+              }`}
+            >
+              {recentlyAddedFilter === 'all' ? 'All' : 
+               recentlyAddedFilter === 30 ? '30d' : 
+               recentlyAddedFilter === 90 ? '90d' :
+               recentlyAddedFilter === 180 ? '180d' :
+               '365d'}
+            </button>
+          )}
 
           {/* Random Control (center) */}
           <button

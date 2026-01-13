@@ -15,6 +15,8 @@ export interface VideoFile {
   FilePath: string
   SourcePath: string
   thumbnailUrl?: string // Derived during normalization
+  FirstSeenUnix?: number // Unix timestamp from VirtualDJ
+  DaysSinceAdded?: number // Days since first seen (calculated server-side)
 }
 
 export interface VideoLibrary {

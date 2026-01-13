@@ -8,6 +8,18 @@ import { parseDuration } from '../utils/duration'
 
 type SortOption = 'title' | 'artist' | 'year' | 'count'
 
+/**
+ * Recently Added Filter — v1 (LOCKED)
+ * 
+ * Final implementation for v1. Intentionally opinionated:
+ * - 5 states: All, 30d, 90d, 180d, 365d
+ * - No additional ranges
+ * - No configuration UI
+ * - No auto-detection
+ * - Missing DaysSinceAdded values are excluded (treated as old content)
+ */
+type RecentlyAddedFilter = 'all' | 30 | 90 | 180 | 365
+
 interface VideoLibraryHomeProps {
   videos: VideoFile[]
 }
@@ -24,6 +36,9 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
   
   // Preview state (temporary filter, does not modify playlist)
   const [previewTracks, setPreviewTracks] = useState<VideoFile[] | null>(null)
+  
+  // Recently Added filter — v1 (LOCKED: 5-state toggle)
+  const [recentlyAddedFilter, setRecentlyAddedFilter] = useState<RecentlyAddedFilter>('all')
   
   // Calculate min/max years from videos (for slider bounds)
   const { minYear, maxYear } = useMemo(() => {
@@ -157,6 +172,14 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
       })
     }
 
+    // Apply Recently Added filter
+    // Missing DaysSinceAdded values are treated as "old" (excluded)
+    if (recentlyAddedFilter !== 'all') {
+      filtered = filtered.filter((video) => {
+        return video.DaysSinceAdded !== undefined && video.DaysSinceAdded <= recentlyAddedFilter
+      })
+    }
+
     // Apply sort
     const sorted = [...filtered].sort((a, b) => {
       switch (sortBy) {
@@ -174,7 +197,7 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
     })
 
     return sorted
-  }, [videos, searchQuery, centerYear, maxYear, sortBy, parsedYearRange, previewTracks])
+  }, [videos, searchQuery, centerYear, maxYear, sortBy, parsedYearRange, previewTracks, recentlyAddedFilter])
 
   const handleVideoClick = (video: VideoFile) => {
     setSelectedVideo(video)
@@ -300,6 +323,18 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
     setPreviewTracks(null) // Clear preview on filter change
   }
 
+  // Cycle Recently Added filter — v1 (LOCKED: All → 30d → 90d → 180d → 365d → All)
+  const cycleRecentlyAddedFilter = () => {
+    const next: RecentlyAddedFilter = 
+      recentlyAddedFilter === 'all' ? 30 :
+      recentlyAddedFilter === 30 ? 90 :
+      recentlyAddedFilter === 90 ? 180 :
+      recentlyAddedFilter === 180 ? 365 :
+      'all'
+    setRecentlyAddedFilter(next)
+    setPreviewTracks(null) // Clear preview on filter change
+  }
+
   // Handle year range change
   const handleCenterYearChange = (year: number) => {
     setCenterYear(year)
@@ -347,8 +382,10 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
         allTracks={videos}
         onAddToPlaylist={handleAddToPlaylist}
         onPreview={handlePreview}
-        onClearFilters={handleClearFilters}
-        onRandomPanelOpenChange={handleRandomPanelOpenChange}
+          onClearFilters={handleClearFilters}
+          onRandomPanelOpenChange={handleRandomPanelOpenChange}
+          recentlyAddedFilter={recentlyAddedFilter}
+          onRecentlyAddedFilterClick={cycleRecentlyAddedFilter}
       />
 
       {/* Main Content — Library (always visible) */}
