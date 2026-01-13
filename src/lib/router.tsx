@@ -7,10 +7,15 @@ import { SectionPage } from '@/components/SectionPage'
 import { ScreenDesignPage, ScreenDesignFullscreen } from '@/components/ScreenDesignPage'
 import { ShellDesignPage, ShellDesignFullscreen } from '@/components/ShellDesignPage'
 import { ExportPage } from '@/components/ExportPage'
+import VideoLibraryHome from '@/sections/workbench-core-video-library-v1/VideoLibraryHome'
 
 export const router = createBrowserRouter([
   {
     path: '/',
+    element: <VideoLibraryHome />,
+  },
+  {
+    path: '/design-os',
     element: <ProductPage />,
   },
   {
