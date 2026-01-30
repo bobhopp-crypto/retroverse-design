@@ -313,8 +313,8 @@
         if (video) renderCandidates(video, candidateSearchEl.value);
       });
 
-      var indexUrl = 'public/data/video-index.json';
-      var decisionsUrl = 'public/data/decisions.json';
+      var indexUrl = 'data/video-index.json';
+      var decisionsUrl = 'data/decisions.json';
 
       fetch(indexUrl)
         .then(function (r) {
