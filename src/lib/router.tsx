@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { ProductPage } from '@/components/ProductPage'
 import { DataModelPage } from '@/components/DataModelPage'
 import { DesignPage } from '@/components/DesignPage'
@@ -8,11 +8,28 @@ import { ScreenDesignPage, ScreenDesignFullscreen } from '@/components/ScreenDes
 import { ShellDesignPage, ShellDesignFullscreen } from '@/components/ShellDesignPage'
 import { ExportPage } from '@/components/ExportPage'
 import VideoLibraryHome from '@/sections/workbench-core-video-library-v1/VideoLibraryHome'
+import { HubLanding, GamesLanding, ToolsLanding } from '@/pages'
 
 export const router = createBrowserRouter([
   {
     path: '/',
+    element: <Navigate to="/hub" replace />,
+  },
+  {
+    path: '/hub',
+    element: <HubLanding />,
+  },
+  {
+    path: '/videolibrary',
     element: <VideoLibraryHome />,
+  },
+  {
+    path: '/games',
+    element: <GamesLanding />,
+  },
+  {
+    path: '/tools',
+    element: <ToolsLanding />,
   },
   {
     path: '/design-os',

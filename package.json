@@ -8,9 +8,12 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "pipeline:thumbnails": "tsx scripts/pipeline/thumbnails.ts"
+    "pipeline:thumbnails": "tsx scripts/pipeline/thumbnails.ts",
+    "editor-api": "node server/editor-api/server.js",
+    "editor-static": "node server/editor-api/static.js"
   },
   "dependencies": {
+    "express": "^4.21.0",
     "@radix-ui/react-avatar": "^1.1.11",
     "@radix-ui/react-collapsible": "^1.1.12",
     "@radix-ui/react-dialog": "^1.1.15",

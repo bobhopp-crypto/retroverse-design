@@ -31,7 +31,7 @@ export function PlaylistShell({ playlistTracks, onVideoClick: _onVideoClick, onP
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
       {/* Count + Duration Header */}
       <div className="mb-4 text-center">
-        <div className="text-lg font-mono text-[#C7BBA7]">
+        <div className="text-lg font-mono" style={{ color: 'var(--rv-text-muted)' }}>
           {playlistTracks.length.toString().padStart(3, '0')} tracks • {hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}
         </div>
       </div>
@@ -51,7 +51,7 @@ export function PlaylistShell({ playlistTracks, onVideoClick: _onVideoClick, onP
           ))}
         </div>
       ) : (
-        <div className="text-center py-12 text-[#C7BBA7]">
+        <div className="text-center py-12" style={{ color: 'var(--rv-text-muted)' }}>
           Playlist is empty
         </div>
       )}

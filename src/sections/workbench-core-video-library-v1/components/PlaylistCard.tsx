@@ -103,31 +103,33 @@ export function PlaylistCard({ video, index, onPlay, onRemove, onReorder }: Play
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerCancel}
-      className={`relative w-full p-2 sm:p-3 border-b border-[#3C3129] transition-colors ${
+      className={`relative w-full p-2 sm:p-3 border-b transition-colors ${
         isDragging 
-          ? 'bg-[#3C3120] shadow-lg scale-[1.02] cursor-grabbing' 
-          : 'bg-transparent hover:bg-[#2E2620] cursor-grab'
+          ? 'shadow-lg scale-[1.02] cursor-grabbing' 
+          : 'bg-transparent cursor-grab hover:bg-[var(--rv-bg-hover)]'
       }`}
       style={{
         touchAction: 'none',
         transform: isDragging ? `translateY(${dragOffsetY}px)` : undefined,
+        borderColor: 'var(--rv-border)',
+        ...(isDragging ? { background: 'var(--rv-bg-drag)' } : {}),
       }}
     >
       <div className="flex gap-3 sm:gap-4 items-center">
         {/* Content */}
         <div className="flex-1 min-w-0">
           {/* Title: Max 2 lines, fixed font size and line-height (matches VideoRow) */}
-          <div className="font-semibold text-sm text-[#F5ECD7] leading-[1.3] mb-1 line-clamp-2">
+          <div className="font-semibold text-sm leading-[1.3] mb-1 line-clamp-2" style={{ color: 'var(--rv-text)' }}>
             {video.Title}
           </div>
 
           {/* Artist: 1 line only, smaller than title (matches VideoRow) */}
-          <div className="text-[10px] text-[#C7BBA7] leading-[1.2] mb-1 truncate">
+          <div className="text-[10px] leading-[1.2] mb-1 truncate" style={{ color: 'var(--rv-text-muted)' }}>
             {video.Artist}
           </div>
 
           {/* Line 3: Metadata bar (Year, Duration only) - grid layout */}
-          <div className="meta-row-playlist text-[#C7BBA7]">
+          <div className="meta-row-playlist" style={{ color: 'var(--rv-text-muted)' }}>
             <span className="meta-year">{video.Year || 'Unknown'}</span>
             <span className="text-center">•</span>
             <span className="meta-time">{formatTime(video.Length)}</span>
@@ -142,7 +144,8 @@ export function PlaylistCard({ video, index, onPlay, onRemove, onReorder }: Play
               e.stopPropagation()
               onPlay()
             }}
-            className="w-7 h-7 rounded-full bg-[#2E2620] border border-[#3C3129] text-[#C7BBA7] hover:bg-[#3C3129] hover:text-[#F5ECD7] transition-colors flex items-center justify-center"
+            className="w-7 h-7 rounded-full border transition-colors flex items-center justify-center hover:bg-[var(--rv-border)] hover:text-[var(--rv-text)]"
+            style={{ background: 'var(--rv-bg-hover)', borderColor: 'var(--rv-border)', color: 'var(--rv-text-muted)' }}
             aria-label="Play"
           >
             <svg
@@ -167,7 +170,8 @@ export function PlaylistCard({ video, index, onPlay, onRemove, onReorder }: Play
               e.stopPropagation()
               onRemove()
             }}
-            className="w-7 h-7 rounded-full bg-[#2E2620] border border-[#3C3129] text-[#C7BBA7] hover:bg-[#3C3129] hover:text-[#F5ECD7] transition-colors flex items-center justify-center"
+            className="w-7 h-7 rounded-full border transition-colors flex items-center justify-center hover:bg-[var(--rv-border)] hover:text-[var(--rv-text)]"
+            style={{ background: 'var(--rv-bg-hover)', borderColor: 'var(--rv-border)', color: 'var(--rv-text-muted)' }}
             aria-label="Remove"
           >
             <svg

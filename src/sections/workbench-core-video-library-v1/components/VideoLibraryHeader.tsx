@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { RandomPanel } from './RandomPanel'
 import type { VideoFile } from '../types'
 
@@ -101,13 +102,20 @@ export function VideoLibraryHeader({
   }
 
   return (
-    <div className="sticky top-0 z-10 bg-[#241E18] border-b border-[#3C3129]">
-      {/* 1. Utility Row — Global icon, search input, count text */}
-      <div className="flex items-center px-3 sm:px-6 py-2 sm:py-4 border-b border-[#3C3129] min-w-0">
+    <div className="sticky top-0 z-10 border-b min-w-0" style={{ background: 'var(--rv-color-navy)', borderColor: 'var(--rv-color-navy)' }}>
+      {/* 1. Utility Row — Hub link, global icon, search input, count text */}
+      <div className="flex items-center px-3 sm:px-6 py-2 sm:py-4 border-b min-w-0 gap-2" style={{ borderColor: 'var(--rv-color-navy)' }}>
+        <Link
+          to="/hub"
+          className="shrink-0 text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity"
+          style={{ color: 'var(--rv-color-gold)' }}
+        >
+          ← RetroVerse Hub
+        </Link>
         {/* Global icon container */}
-        <div className="w-9 h-9 shrink-0 bg-[#2E2620] border border-[#3C3129] rounded flex items-center justify-center">
+        <div className="w-9 h-9 shrink-0 rounded flex items-center justify-center" style={{ background: 'var(--rv-color-navy)', border: '1px solid var(--rv-color-gold)' }}>
           {/* Placeholder icon */}
-          <div className="w-5 h-5 text-[#C7BBA7] opacity-60">
+          <div className="w-5 h-5 opacity-60" style={{ color: 'var(--rv-color-butter)' }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -132,18 +140,18 @@ export function VideoLibraryHeader({
              value={searchQuery}
              onChange={(e) => onSearchChange(e.target.value)}
              placeholder="Look up . . . "
-             className="w-full max-w-[120px] sm:max-w-[240px] px-3 sm:px-4 py-2 bg-[#1A1510] border border-[#3C3129] rounded text-[#F5ECD7] placeholder-[#C7BBA7] focus:outline-none focus:border-[#E8D29A] focus:ring-2 focus:ring-[#E8D29A]/20"
+             className="w-full max-w-[120px] sm:max-w-[240px] px-3 sm:px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[var(--rv-color-gold)]/20 focus:border-[var(--rv-color-gold)] bg-[var(--rv-color-navy)] border border-[var(--rv-color-gold)] text-[var(--rv-color-butter)] placeholder:text-[var(--rv-color-gold)]/80"
            />
         </div>
 
         {/* Visible count text */}
-        <div className="text-[20px] sm:text-[28px] text-[#C7BBA7] opacity-75 sm:opacity-100 whitespace-nowrap shrink-0">
+        <div className="text-[20px] sm:text-[28px] opacity-75 sm:opacity-100 whitespace-nowrap shrink-0" style={{ color: 'var(--rv-color-butter)' }}>
           {visibleCount}
         </div>
       </div>
 
           {/* 2. Filter Row — 7-year range selector */}
-          <div className="px-4 sm:px-6 py-1.5 sm:py-3 border-b-0 sm:border-b border-[#3C3129]">
+          <div className="px-4 sm:px-6 py-1.5 sm:py-3 border-b-0 sm:border-b" style={{ borderColor: 'var(--rv-color-gold)' }}>
             <div className="flex items-center gap-3 sm:gap-4">
               {/* Year slider */}
               <input
@@ -152,15 +160,12 @@ export function VideoLibraryHeader({
                 max={maxYear}
                 value={centerYear}
                 onChange={(e) => onCenterYearChange(Number(e.target.value))}
-                className={`flex-1 h-1.5 rounded-lg appearance-none cursor-pointer slider ${
-                  isCatalogMode ? 'bg-[#2E2620] opacity-50' : 'bg-[#2E2620]'
-                }`}
+                className={`flex-1 h-1.5 rounded-lg appearance-none cursor-pointer slider ${isCatalogMode ? 'opacity-50' : ''}`}
+                style={{ background: 'var(--rv-color-navy)' }}
               />
 
               {/* Range display */}
-              <div className={`text-sm font-mono shrink-0 min-w-[75px] sm:min-w-[80px] ${
-                isCatalogMode ? 'text-[#C7BBA7] opacity-50' : 'text-[#C7BBA7]'
-              }`}>
+              <div className={`text-sm font-mono shrink-0 min-w-[75px] sm:min-w-[80px] ${isCatalogMode ? 'opacity-50' : ''}`} style={{ color: 'var(--rv-color-butter)' }}>
                 {rangeText}
               </div>
             </div>
@@ -172,7 +177,8 @@ export function VideoLibraryHeader({
           {/* Sort Control (left) */}
           <button
             onClick={handleSortClick}
-            className="px-3 py-1.5 rounded-full text-sm transition-colors bg-[#2E2620] text-[#C7BBA7] hover:bg-[#3C3129] border border-[#3C3129]"
+            className="px-3 py-1.5 rounded-full text-sm transition-colors border hover:opacity-90"
+            style={{ background: 'var(--rv-color-navy)', color: 'var(--rv-color-butter)', borderColor: 'var(--rv-color-gold)' }}
           >
             {getSortLabel()}
           </button>
@@ -181,11 +187,12 @@ export function VideoLibraryHeader({
           {onRecentlyAddedFilterClick && (
             <button
               onClick={onRecentlyAddedFilterClick}
-              className={`px-3 py-1.5 rounded-full text-sm transition-colors border ${
+              className="px-3 py-1.5 rounded-full text-sm transition-colors border hover:opacity-90"
+              style={
                 recentlyAddedFilter !== 'all'
-                  ? 'bg-[#A6765B] text-[#F5ECD7] border-[#A6765B]'
-                  : 'bg-[#2E2620] text-[#C7BBA7] hover:bg-[#3C3129] border-[#3C3129]'
-              }`}
+                  ? { background: 'var(--rv-color-coral)', color: 'var(--rv-color-butter)', borderColor: 'var(--rv-color-coral)' }
+                  : { background: 'var(--rv-color-navy)', color: 'var(--rv-color-butter)', borderColor: 'var(--rv-color-gold)' }
+              }
             >
               {recentlyAddedFilter === 'all' ? 'All' : 
                recentlyAddedFilter === 30 ? '30d' : 
@@ -201,11 +208,12 @@ export function VideoLibraryHeader({
               setIsRandomPanelOpen(true)
               onRandomPanelOpenChange?.(true)
             }}
-            className={`px-3 py-1.5 rounded-full text-sm transition-colors border ${
+            className="px-3 py-1.5 rounded-full text-sm transition-colors border hover:opacity-90"
+            style={
               isRandomPanelOpen
-                ? 'bg-[#A6765B] text-[#F5ECD7] border-[#A6765B]'
-                : 'bg-[#2E2620] text-[#C7BBA7] hover:bg-[#3C3129] border-[#3C3129]'
-            }`}
+                ? { background: 'var(--rv-color-coral)', color: 'var(--rv-color-butter)', borderColor: 'var(--rv-color-coral)' }
+                : { background: 'var(--rv-color-navy)', color: 'var(--rv-color-butter)', borderColor: 'var(--rv-color-gold)' }
+            }
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -226,7 +234,8 @@ export function VideoLibraryHeader({
           {/* Playlist Display (right) */}
           <button 
             onClick={() => onPlaylistClick?.()}
-            className="px-3 py-1.5 rounded-full text-sm font-mono bg-[#2E2620] text-[#C7BBA7] border border-[#3C3129] hover:bg-[#3C3129] whitespace-nowrap transition-colors cursor-pointer"
+            className="px-3 py-1.5 rounded-full text-sm font-mono border whitespace-nowrap transition-colors cursor-pointer hover:opacity-90"
+            style={{ background: 'var(--rv-color-navy)', color: 'var(--rv-color-butter)', borderColor: 'var(--rv-color-gold)' }}
           >
             {formatPlaylist()}
           </button>
@@ -240,7 +249,7 @@ export function VideoLibraryHeader({
           width: 16px;
           height: 16px;
           border-radius: 50%;
-          background: ${isCatalogMode ? '#3C3129' : '#A6765B'};
+          background: ${isCatalogMode ? 'var(--rv-color-navy)' : 'var(--rv-color-gold)'};
           cursor: pointer;
           transition: background 0.2s;
         }
@@ -248,7 +257,7 @@ export function VideoLibraryHeader({
           width: 16px;
           height: 16px;
           border-radius: 50%;
-          background: ${isCatalogMode ? '#3C3129' : '#A6765B'};
+          background: ${isCatalogMode ? 'var(--rv-color-navy)' : 'var(--rv-color-gold)'};
           cursor: pointer;
           border: none;
           transition: background 0.2s;

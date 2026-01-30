@@ -42,9 +42,9 @@ export function VideoDetailOverlay({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="bg-[#241E18] border-[#3C3129] text-[#F5ECD7] max-w-[calc(100vw-2rem)] sm:max-w-2xl">
+      <DialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-2xl" style={{ background: 'var(--rv-bg-panel)', borderColor: 'var(--rv-border)', color: 'var(--rv-text)' }}>
         <DialogHeader>
-          <DialogTitle className="text-[#F5ECD7] mb-4 text-lg sm:text-xl">{video.Title}</DialogTitle>
+          <DialogTitle className="mb-4 text-lg sm:text-xl" style={{ color: 'var(--rv-text)' }}>{video.Title}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
@@ -52,52 +52,54 @@ export function VideoDetailOverlay({
           <img
             src={video.thumbnailUrl || '/thumbnails/placeholder.png'}
             alt=""
-            className="w-full h-32 sm:h-48 object-cover rounded border border-[#3C3129]"
+            className="w-full h-32 sm:h-48 object-cover rounded border"
+            style={{ borderColor: 'var(--rv-border)' }}
           />
 
           {/* Details */}
           <div className="space-y-2 text-sm">
             <div className="flex">
-              <span className="text-[#C7BBA7] w-24">Artist:</span>
-              <span className="text-[#F5ECD7]">{video.Artist}</span>
+              <span className="w-24" style={{ color: 'var(--rv-text-muted)' }}>Artist:</span>
+              <span style={{ color: 'var(--rv-text)' }}>{video.Artist}</span>
             </div>
             <div className="flex">
-              <span className="text-[#C7BBA7] w-24">Year:</span>
-              <span className="text-[#F5ECD7]">{video.Year || 'Unknown'}</span>
+              <span className="w-24" style={{ color: 'var(--rv-text-muted)' }}>Year:</span>
+              <span style={{ color: 'var(--rv-text)' }}>{video.Year || 'Unknown'}</span>
             </div>
             <div className="flex">
-              <span className="text-[#C7BBA7] w-24">Genre:</span>
-              <span className="text-[#F5ECD7]">{video.Genre || 'Unknown'}</span>
+              <span className="w-24" style={{ color: 'var(--rv-text-muted)' }}>Genre:</span>
+              <span style={{ color: 'var(--rv-text)' }}>{video.Genre || 'Unknown'}</span>
             </div>
             <div className="flex">
-              <span className="text-[#C7BBA7] w-24">Duration:</span>
-              <span className="text-[#F5ECD7]">{video.Length}</span>
+              <span className="w-24" style={{ color: 'var(--rv-text-muted)' }}>Duration:</span>
+              <span style={{ color: 'var(--rv-text)' }}>{video.Length}</span>
             </div>
             <div className="flex">
-              <span className="text-[#C7BBA7] w-24">Plays:</span>
-              <span className="text-[#F5ECD7]">{video.PlayCount}</span>
+              <span className="w-24" style={{ color: 'var(--rv-text-muted)' }}>Plays:</span>
+              <span style={{ color: 'var(--rv-text)' }}>{video.PlayCount}</span>
             </div>
             {video.Grouping && (
               <div className="flex">
-                <span className="text-[#C7BBA7] w-24">Grouping:</span>
-                <span className="text-[#F5ECD7]">{video.Grouping}</span>
+                <span className="w-24" style={{ color: 'var(--rv-text-muted)' }}>Grouping:</span>
+                <span style={{ color: 'var(--rv-text)' }}>{video.Grouping}</span>
               </div>
             )}
             {video.FilePath && (
               <div className="flex">
-                <span className="text-[#C7BBA7] w-24">Path:</span>
-                <span className="text-[#C7BBA7] text-xs font-mono break-all">{video.FilePath}</span>
+                <span className="w-24" style={{ color: 'var(--rv-text-muted)' }}>Path:</span>
+                <span className="text-xs font-mono break-all" style={{ color: 'var(--rv-text-muted)' }}>{video.FilePath}</span>
               </div>
             )}
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-3 pt-4 border-t border-[#3C3129]">
+        <div className="flex gap-3 pt-4 border-t" style={{ borderColor: 'var(--rv-border)' }}>
           {onPlay && (
             <button
               onClick={handlePlay}
-              className="flex-1 px-4 py-2.5 rounded text-sm font-medium transition-colors bg-[#A6765B] text-[#F5ECD7] hover:bg-[#B5846B] border border-[#A6765B]"
+              className="flex-1 px-4 py-2.5 rounded text-sm font-medium transition-colors border hover:bg-[var(--rv-accent-hover)]"
+              style={{ background: 'var(--rv-accent)', color: 'var(--rv-text)', borderColor: 'var(--rv-accent)' }}
             >
               Play
             </button>
@@ -107,9 +109,14 @@ export function VideoDetailOverlay({
               onClick={handleAddToPlaylist}
               className={`flex-1 px-4 py-2.5 rounded text-sm font-medium transition-colors border ${
                 inPlaylist
-                  ? 'bg-[#A6765B] text-[#F5ECD7] border-[#A6765B] hover:bg-[#B5846B]'
-                  : 'bg-[#2E2620] text-[#C7BBA7] border-[#3C3129] hover:bg-[#3C3129] hover:text-[#F5ECD7]'
+                  ? 'hover:bg-[var(--rv-accent-hover)]'
+                  : 'bg-[var(--rv-bg-hover)] hover:bg-[var(--rv-border)] hover:text-[var(--rv-text)]'
               }`}
+              style={
+                inPlaylist
+                  ? { background: 'var(--rv-accent)', color: 'var(--rv-text)', borderColor: 'var(--rv-accent)' }
+                  : { color: 'var(--rv-text-muted)', borderColor: 'var(--rv-border)' }
+              }
             >
               {inPlaylist ? 'Remove from Playlist' : 'Add to Playlist'}
             </button>

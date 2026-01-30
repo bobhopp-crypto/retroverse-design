@@ -48,15 +48,15 @@ export default function VideoLibraryHome() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#1A1510] text-[#F5ECD7] flex items-center justify-center">
-        <div className="text-[#C7BBA7]">Loading video library...</div>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--rv-bg-base)', color: 'var(--rv-text)' }}>
+        <div style={{ color: 'var(--rv-text-muted)' }}>Loading video library...</div>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#1A1510] text-[#F5ECD7] flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--rv-bg-base)', color: 'var(--rv-text)' }}>
         <div className="text-red-400">Error: {error}</div>
       </div>
     )

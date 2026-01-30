@@ -9,7 +9,7 @@ interface VideoListProps {
 export function VideoList({ videos, onVideoClick }: VideoListProps) {
   if (videos.length === 0) {
     return (
-      <div className="text-center py-12 text-[#C7BBA7]">
+      <div className="text-center py-12" style={{ color: 'var(--rv-text-muted)' }}>
         No videos found matching your filters.
       </div>
     )

@@ -20,7 +20,7 @@ export function VideoRow({ video, onClick }: VideoRowProps) {
   return (
     <button
       onClick={onClick}
-      className="w-full p-3 sm:p-4 hover:bg-[#2E2620] transition-colors border-b border-[#3C3129] text-left"
+      className="w-full p-3 sm:p-4 transition-colors border-b text-left bg-transparent hover:bg-[var(--rv-bg-hover)] border-[var(--rv-border)]"
     >
       <div className="flex gap-3 sm:gap-4 items-center">
         {/* Thumbnail - always render with placeholder fallback */}
@@ -34,17 +34,17 @@ export function VideoRow({ video, onClick }: VideoRowProps) {
         {/* Content */}
         <div className="flex-1 min-w-0">
           {/* Title: Max 2 lines, fixed font size and line-height */}
-          <div className="font-semibold text-sm text-[#F5ECD7] leading-[1.3] mb-1 line-clamp-2">
+          <div className="font-semibold text-sm leading-[1.3] mb-1 line-clamp-2" style={{ color: 'var(--rv-text)' }}>
             {video.Title}
           </div>
           
           {/* Artist: 1 line only, smaller than title */}
-          <div className="text-[10px] text-[#C7BBA7] leading-[1.2] mb-2 truncate">
+          <div className="text-[10px] leading-[1.2] mb-2 truncate" style={{ color: 'var(--rv-text-muted)' }}>
             {video.Artist}
           </div>
           
           {/* Line 3: Metadata bar - grid layout */}
-          <div className="meta-row text-[#C7BBA7]">
+          <div className="meta-row" style={{ color: 'var(--rv-text-muted)' }}>
             <span className="meta-year">{video.Year || 'Unknown'}</span>
             <span className="text-center">•</span>
             <span className="meta-time">{formatTime(video.Length)}</span>

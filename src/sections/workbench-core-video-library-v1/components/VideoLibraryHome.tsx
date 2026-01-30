@@ -362,7 +362,7 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[#1A1510] text-[#F5ECD7]">
+    <div className="min-h-screen" style={{ background: 'var(--rv-bg-base)', color: 'var(--rv-text)' }}>
       {/* Header — v1 (Locked) */}
       <VideoLibraryHeader
         visibleCount={filteredAndSortedVideos.length}
@@ -412,8 +412,8 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
       />
 
       {/* Footer placeholder for future timeline / nostalgia navigation (inactive in v1) */}
-      <div className="border-t border-[#3C3129] bg-[#241E18] px-6 py-4 mt-8">
-        <div className="max-w-6xl mx-auto text-center text-sm text-[#C7BBA7] opacity-50">
+      <div className="border-t px-6 py-4 mt-8" style={{ borderColor: 'var(--rv-border)', background: 'var(--rv-bg-panel)' }}>
+        <div className="max-w-6xl mx-auto text-center text-sm opacity-50" style={{ color: 'var(--rv-text-muted)' }}>
           Timeline & Nostalgia Navigation (v2+)
         </div>
       </div>
@@ -454,7 +454,7 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
                 width: 'min(90vw, 960px)',
                 height: 'min(80vh, 540px)',
                 minHeight: '240px',
-                backgroundColor: '#000',
+                backgroundColor: 'var(--rv-color-black)',
                 borderRadius: '12px',
                 overflow: 'hidden',
                 position: 'relative'
@@ -474,7 +474,7 @@ export function VideoLibraryHome({ videos }: VideoLibraryHomeProps) {
                   borderRadius: '50%',
                   backgroundColor: 'rgba(0, 0, 0, 0.6)',
                   border: '1px solid rgba(255, 255, 255, 0.3)',
-                  color: '#fff',
+                  color: 'var(--rv-color-white)',
                   fontSize: '20px',
                   lineHeight: '1',
                   cursor: 'pointer',

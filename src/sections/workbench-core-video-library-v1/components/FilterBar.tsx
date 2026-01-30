@@ -20,14 +20,19 @@ export function FilterBar({
   onSortChange,
 }: FilterBarProps) {
   return (
-    <div className="space-y-3 sm:space-y-4 p-3 sm:p-4 border-b border-[#3C3129] bg-[#241E18]">
+    <div className="space-y-3 sm:space-y-4 p-3 sm:p-4 border-b bg-[var(--rv-bg-panel)]" style={{ borderColor: 'var(--rv-border)' }}>
       {/* Search box */}
       <input
         type="text"
         value={searchQuery}
         onChange={(e) => onSearchChange(e.target.value)}
         placeholder="Look up . . . "
-        className="w-full px-3 sm:px-4 py-2 bg-[#1A1510] border border-[#3C3129] rounded text-[#F5ECD7] placeholder-[#C7BBA7] focus:outline-none focus:border-[#E8D29A] focus:ring-2 focus:ring-[#E8D29A]/20 text-sm sm:text-base"
+        className="w-full px-3 sm:px-4 py-2 rounded text-sm sm:text-base focus:outline-none focus:ring-2 focus:border-[var(--rv-focus)] focus:ring-[var(--rv-focus)]/20"
+        style={{
+          background: 'var(--rv-bg-base)',
+          border: '1px solid var(--rv-border)',
+          color: 'var(--rv-text)',
+        }}
       />
 
       {/* Decade filter chips */}
@@ -36,9 +41,10 @@ export function FilterBar({
           onClick={() => onDecadeChange(null)}
           className={`px-3 py-1 rounded text-sm transition-colors ${
             selectedDecade === null
-              ? 'bg-[#E3C47C] text-[#1A1510]'
-              : 'bg-[#2E2620] text-[#C7BBA7] hover:bg-[#3C3129]'
+              ? 'bg-[var(--rv-chip-selected)] text-[var(--rv-bg-base)]'
+              : 'bg-[var(--rv-bg-hover)] hover:bg-[var(--rv-border)]'
           }`}
+          style={selectedDecade !== null ? { color: 'var(--rv-text-muted)' } : undefined}
         >
           All
         </button>
@@ -48,9 +54,10 @@ export function FilterBar({
             onClick={() => onDecadeChange(decade)}
             className={`px-3 py-1 rounded text-sm transition-colors ${
               selectedDecade === decade
-                ? 'bg-[#E3C47C] text-[#1A1510]'
-                : 'bg-[#2E2620] text-[#C7BBA7] hover:bg-[#3C3129]'
+                ? 'bg-[var(--rv-chip-selected)] text-[var(--rv-bg-base)]'
+                : 'bg-[var(--rv-bg-hover)] hover:bg-[var(--rv-border)]'
             }`}
+            style={selectedDecade !== decade ? { color: 'var(--rv-text-muted)' } : undefined}
           >
             {decade}
           </button>
@@ -59,14 +66,15 @@ export function FilterBar({
 
       {/* Sort toggle group */}
       <div className="flex gap-2">
-        <span className="text-sm text-[#C7BBA7] mr-2">Sort:</span>
+        <span className="text-sm mr-2" style={{ color: 'var(--rv-text-muted)' }}>Sort:</span>
         <button
           onClick={() => onSortChange('title')}
           className={`px-3 py-1 rounded text-sm transition-colors ${
             sortBy === 'title'
-              ? 'bg-[#A6765B] text-[#F5ECD7]'
-              : 'bg-[#2E2620] text-[#C7BBA7] hover:bg-[#3C3129]'
+              ? 'bg-[var(--rv-accent)]'
+              : 'bg-[var(--rv-bg-hover)] hover:bg-[var(--rv-border)]'
           }`}
+          style={sortBy === 'title' ? { color: 'var(--rv-text)' } : { color: 'var(--rv-text-muted)' }}
         >
           A–Z
         </button>
@@ -74,9 +82,10 @@ export function FilterBar({
           onClick={() => onSortChange('popularity')}
           className={`px-3 py-1 rounded text-sm transition-colors ${
             sortBy === 'popularity'
-              ? 'bg-[#A6765B] text-[#F5ECD7]'
-              : 'bg-[#2E2620] text-[#C7BBA7] hover:bg-[#3C3129]'
+              ? 'bg-[var(--rv-accent)]'
+              : 'bg-[var(--rv-bg-hover)] hover:bg-[var(--rv-border)]'
           }`}
+          style={sortBy === 'popularity' ? { color: 'var(--rv-text)' } : { color: 'var(--rv-text-muted)' }}
         >
           Popularity
         </button>
@@ -84,9 +93,10 @@ export function FilterBar({
           onClick={() => onSortChange('year')}
           className={`px-3 py-1 rounded text-sm transition-colors ${
             sortBy === 'year'
-              ? 'bg-[#A6765B] text-[#F5ECD7]'
-              : 'bg-[#2E2620] text-[#C7BBA7] hover:bg-[#3C3129]'
+              ? 'bg-[var(--rv-accent)]'
+              : 'bg-[var(--rv-bg-hover)] hover:bg-[var(--rv-border)]'
           }`}
+          style={sortBy === 'year' ? { color: 'var(--rv-text)' } : { color: 'var(--rv-text-muted)' }}
         >
           Year
         </button>

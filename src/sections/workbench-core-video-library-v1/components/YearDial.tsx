@@ -91,9 +91,10 @@ export function YearDial({ minYear, maxYear, value, onChange }: YearDialProps) {
           onClick={() => setMode('all')}
           className={`px-3 py-1 rounded text-sm transition-colors ${
             mode === 'all'
-              ? 'bg-[#2E2620] text-[#F5ECD7]'
-              : 'bg-transparent text-[#C7BBA7] hover:text-[#F5ECD7]'
+              ? 'bg-[var(--rv-bg-hover)]'
+              : 'bg-transparent hover:text-[var(--rv-text)]'
           }`}
+          style={mode === 'all' ? { color: 'var(--rv-text)' } : { color: 'var(--rv-text-muted)' }}
         >
           All
         </button>
@@ -101,9 +102,10 @@ export function YearDial({ minYear, maxYear, value, onChange }: YearDialProps) {
           onClick={() => setMode('range')}
           className={`px-3 py-1 rounded text-sm transition-colors ${
             mode === 'range'
-              ? 'bg-[#2E2620] text-[#F5ECD7]'
-              : 'bg-transparent text-[#C7BBA7] hover:text-[#F5ECD7]'
+              ? 'bg-[var(--rv-bg-hover)]'
+              : 'bg-transparent hover:text-[var(--rv-text)]'
           }`}
+          style={mode === 'range' ? { color: 'var(--rv-text)' } : { color: 'var(--rv-text-muted)' }}
         >
           Range
         </button>
@@ -111,8 +113,8 @@ export function YearDial({ minYear, maxYear, value, onChange }: YearDialProps) {
 
       {/* Center: Round dial */}
       <div
-        className="w-16 h-16 rounded-full bg-[#2E2620] border-2 border-[#3C3129] flex items-center justify-center cursor-grab active:cursor-grabbing touch-none select-none shrink-0"
-        style={{ touchAction: 'none' }}
+        className="w-16 h-16 rounded-full border-2 flex items-center justify-center cursor-grab active:cursor-grabbing touch-none select-none shrink-0"
+        style={{ touchAction: 'none', background: 'var(--rv-bg-hover)', borderColor: 'var(--rv-border)' }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
@@ -124,7 +126,7 @@ export function YearDial({ minYear, maxYear, value, onChange }: YearDialProps) {
         aria-label={`Year dial: ${value}`}
       >
         <div className="text-center">
-          <div className="text-lg font-bold text-[#F5ECD7] leading-none">
+          <div className="text-lg font-bold leading-none" style={{ color: 'var(--rv-text)' }}>
             {value}
           </div>
         </div>
@@ -132,10 +134,10 @@ export function YearDial({ minYear, maxYear, value, onChange }: YearDialProps) {
 
       {/* Right: Year display */}
       <div className="text-right shrink-0">
-        <div className="text-sm text-[#C7BBA7] font-mono">
+        <div className="text-sm font-mono" style={{ color: 'var(--rv-text-muted)' }}>
           {value}
         </div>
-        <div className="text-xs text-[#C7BBA7]/60">
+        <div className="text-xs opacity-60" style={{ color: 'var(--rv-text-muted)' }}>
           {minYear}–{maxYear}
         </div>
       </div>

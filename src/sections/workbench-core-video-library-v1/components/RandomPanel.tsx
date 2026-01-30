@@ -147,20 +147,22 @@ export function RandomPanel({
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent 
-        className="bg-[#241E18] border-[#3C3129] text-[#F5ECD7] p-0 max-w-md"
+        className="p-0 max-w-md"
+        style={{ background: 'var(--rv-bg-panel)', borderColor: 'var(--rv-border)', color: 'var(--rv-text)' }}
         showCloseButton={false}
       >
         {/* 1. Header Row */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-[#3C3129]">
+        <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'var(--rv-border)' }}>
           <h2 
-            className="text-sm font-semibold text-[#F5ECD7]"
-            style={{ fontFamily: 'DM Serif Display, serif' }}
+            className="text-sm font-semibold"
+            style={{ fontFamily: 'DM Serif Display, serif', color: 'var(--rv-text)' }}
           >
             Randomize
           </h2>
           <button
             onClick={onClose}
-            className="w-6 h-6 rounded-full flex items-center justify-center text-[#C7BBA7] hover:bg-[#2E2620] hover:text-[#F5ECD7] transition-colors"
+            className="w-6 h-6 rounded-full flex items-center justify-center transition-colors hover:bg-[var(--rv-bg-hover)] hover:text-[var(--rv-text)]"
+            style={{ color: 'var(--rv-text-muted)' }}
             aria-label="Close"
           >
             <svg
@@ -185,16 +187,18 @@ export function RandomPanel({
           <div className="flex items-center justify-center gap-4">
             <button
               onClick={() => setTrackCount(Math.max(1, trackCount - 1))}
-              className="w-8 h-8 rounded-full bg-[#2E2620] border border-[#3C3129] text-[#C7BBA7] hover:bg-[#3C3129] hover:text-[#F5ECD7] transition-colors flex items-center justify-center text-lg"
+              className="w-8 h-8 rounded-full border transition-colors flex items-center justify-center text-lg hover:bg-[var(--rv-border)] hover:text-[var(--rv-text)]"
+              style={{ background: 'var(--rv-bg-hover)', borderColor: 'var(--rv-border)', color: 'var(--rv-text-muted)' }}
             >
               –
             </button>
-            <div className="text-2xl font-mono text-[#F5ECD7] min-w-[60px] text-center">
+            <div className="text-2xl font-mono min-w-[60px] text-center" style={{ color: 'var(--rv-text)' }}>
               {trackCount}
             </div>
             <button
               onClick={() => setTrackCount(Math.min(100, trackCount + 1))}
-              className="w-8 h-8 rounded-full bg-[#2E2620] border border-[#3C3129] text-[#C7BBA7] hover:bg-[#3C3129] hover:text-[#F5ECD7] transition-colors flex items-center justify-center text-lg"
+              className="w-8 h-8 rounded-full border transition-colors flex items-center justify-center text-lg hover:bg-[var(--rv-border)] hover:text-[var(--rv-text)]"
+              style={{ background: 'var(--rv-bg-hover)', borderColor: 'var(--rv-border)', color: 'var(--rv-text-muted)' }}
             >
               +
             </button>
@@ -208,9 +212,10 @@ export function RandomPanel({
                 onClick={() => handleRotationModeChange(mode)}
                 className={`flex-1 px-2 py-1.5 rounded text-xs transition-colors border ${
                   rotationMode === mode
-                    ? 'bg-[#A6765B] text-[#F5ECD7] border-[#A6765B]'
-                    : 'bg-[#2E2620] text-[#C7BBA7] hover:bg-[#3C3129] border-[#3C3129]'
+                    ? 'bg-[var(--rv-accent)] border-[var(--rv-accent)]'
+                    : 'bg-[var(--rv-bg-hover)] hover:bg-[var(--rv-border)] border-[var(--rv-border)]'
                 }`}
+                style={rotationMode === mode ? { color: 'var(--rv-text)' } : { color: 'var(--rv-text-muted)' }}
               >
                 {mode.charAt(0).toUpperCase() + mode.slice(1)}
               </button>
@@ -219,14 +224,14 @@ export function RandomPanel({
 
           {/* 4. Source Display */}
           <div className="text-center">
-            <div className="text-xs text-[#C7BBA7] opacity-60">
+            <div className="text-xs opacity-60" style={{ color: 'var(--rv-text-muted)' }}>
               Source: {sourceLabel}
             </div>
           </div>
 
           {/* 5. Stats Summary (generatedTracks only) */}
           <div className="text-center">
-            <div className="text-xl font-mono text-[#C7BBA7] tracking-wider">
+            <div className="text-xl font-mono tracking-wider" style={{ color: 'var(--rv-text-muted)' }}>
               {stats.count.toString().padStart(2, ' ')} • {stats.hours.toString().padStart(2, '0')}:{stats.minutes.toString().padStart(2, '0')}
             </div>
           </div>
@@ -236,7 +241,8 @@ export function RandomPanel({
             <button
               onClick={handleGenerate}
               disabled={!canGenerate}
-              className="w-full px-4 py-2 rounded text-sm font-medium transition-colors bg-[#A6765B] text-[#F5ECD7] hover:bg-[#B5846B] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 rounded text-sm font-medium transition-colors hover:bg-[var(--rv-accent-hover)] disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{ background: 'var(--rv-accent)', color: 'var(--rv-text)' }}
             >
               Generate
             </button>
@@ -247,14 +253,16 @@ export function RandomPanel({
             <button
               onClick={handleAddToPlaylist}
               disabled={!canApply}
-              className="flex-1 px-4 py-2 rounded text-sm font-medium transition-colors bg-[#A6765B] text-[#F5ECD7] hover:bg-[#B5846B] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-4 py-2 rounded text-sm font-medium transition-colors hover:bg-[var(--rv-accent-hover)] disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{ background: 'var(--rv-accent)', color: 'var(--rv-text)' }}
             >
               Add to Playlist
             </button>
             <button
               onClick={handlePreview}
               disabled={!canApply}
-              className="flex-1 px-4 py-2 rounded text-sm transition-colors bg-[#2E2620] text-[#C7BBA7] hover:bg-[#3C3129] disabled:opacity-50 disabled:cursor-not-allowed border border-[#3C3129]"
+              className="flex-1 px-4 py-2 rounded text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed border hover:bg-[var(--rv-border)]"
+              style={{ background: 'var(--rv-bg-hover)', color: 'var(--rv-text-muted)', borderColor: 'var(--rv-border)' }}
             >
               Filter List
             </button>
