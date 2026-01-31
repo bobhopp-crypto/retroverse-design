@@ -1,74 +1,20 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom'
-import { ProductPage } from '@/components/ProductPage'
-import { DataModelPage } from '@/components/DataModelPage'
-import { DesignPage } from '@/components/DesignPage'
-import { SectionsPage } from '@/components/SectionsPage'
-import { SectionPage } from '@/components/SectionPage'
-import { ScreenDesignPage, ScreenDesignFullscreen } from '@/components/ScreenDesignPage'
-import { ShellDesignPage, ShellDesignFullscreen } from '@/components/ShellDesignPage'
-import { ExportPage } from '@/components/ExportPage'
-import VideoLibraryHome from '@/sections/workbench-core-video-library-v1/VideoLibraryHome'
-import { HubLanding, GamesLanding, ToolsLanding } from '@/pages'
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import HubLanding from "../pages/HubLanding";
+import GamesLanding from "../pages/GamesLanding";
+import ToolsLanding from "../pages/ToolsLanding";
+import VideoLibraryHome from "../sections/workbench-core-video-library-v1/VideoLibraryHome";
+import EditorHome from "../sections/editor/EditorHome";
 
 export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Navigate to="/hub" replace />,
-  },
-  {
-    path: '/hub',
-    element: <HubLanding />,
-  },
-  {
-    path: '/videolibrary',
-    element: <VideoLibraryHome />,
-  },
-  {
-    path: '/games',
-    element: <GamesLanding />,
-  },
-  {
-    path: '/tools',
-    element: <ToolsLanding />,
-  },
-  {
-    path: '/design-os',
-    element: <ProductPage />,
-  },
-  {
-    path: '/data-model',
-    element: <DataModelPage />,
-  },
-  {
-    path: '/design',
-    element: <DesignPage />,
-  },
-  {
-    path: '/sections',
-    element: <SectionsPage />,
-  },
-  {
-    path: '/sections/:sectionId',
-    element: <SectionPage />,
-  },
-  {
-    path: '/sections/:sectionId/screen-designs/:screenDesignName',
-    element: <ScreenDesignPage />,
-  },
-  {
-    path: '/sections/:sectionId/screen-designs/:screenDesignName/fullscreen',
-    element: <ScreenDesignFullscreen />,
-  },
-  {
-    path: '/shell/design',
-    element: <ShellDesignPage />,
-  },
-  {
-    path: '/shell/design/fullscreen',
-    element: <ShellDesignFullscreen />,
-  },
-  {
-    path: '/export',
-    element: <ExportPage />,
-  },
-])
+  { path: "/", element: <Navigate to="/hub" replace /> },
+
+  { path: "/hub", element: <HubLanding /> },
+  { path: "/videolibrary", element: <VideoLibraryHome /> },
+  { path: "/games", element: <GamesLanding /> },
+  { path: "/tools", element: <ToolsLanding /> },
+
+  { path: "/editor", element: <EditorHome /> },
+
+  // fallback for 404
+  { path: "*", element: <Navigate to="/hub" replace /> }
+]);
